@@ -1,0 +1,161 @@
+/* Make the app fill the viewport and split into two panels */
+.app-container {
+  background-color: #e7eff6;  /* light grey */
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+/* Top app header */
+.app-header {
+  background-color: #f5f5f5;
+  padding: 16px;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Left side: upload + settings */
+.left-panel {
+  width: 30%;              /* fixed ~30% width */
+  border-right: 1px solid #ccc;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Right side: result display */
+.right-panel {
+  flex: 1;                 /* take remaining width */
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Optional: header bar on right */
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* The main result image container */
+/* Constrain the result container so it never grows too large */
+.result-image {
+  max-width: 80%;       /* never wider than 80% of the panel */
+  margin: 0 auto 12px;  /* center it horizontally, with bottom gap */
+}
+
+/* Constrain the image itself */
+.result-image img {
+  display: block;
+  width: 100%;          /* fill the container’s width */
+  max-height: 60vh;     /* never taller than 60% of the viewport */
+  object-fit: contain;  /* preserve aspect ratio */
+}
+
+
+
+/* Footer action buttons + progress bar */
+/* Space out the three footer buttons */
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;            /* space between the bar and the button row */
+}
+
+/* progress now simply fills the width of its parent */
+.footer progress {
+  width: 100%;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* then space out your button row below */
+.footer > div {
+  display: flex;
+  gap: 12px;
+}
+
+
+/* Preview box now sizes itself to the image */
+.upload-preview {
+  display: inline-block;       /* shrink‑wrap to its contents */
+  border: 1px dashed #aaa;
+  margin-bottom: 12px;
+  background: #fafafa;
+  /* make sure it never exceeds the panel width */
+  max-width: 100%;
+  overflow: auto;              /* if the image is huge, you’ll get scrollbars */
+}
+
+/* When there’s no image, give the placeholder some padding */
+.upload-preview span {
+  display: block;
+  padding: 2rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* The image will render at its natural size,
+   but won’t grow beyond the panel’s width */
+.preview-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Add this to your App.css (or wherever you keep your panel styles) */
+
+/* Stack preview + buttons vertically */
+.upload-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* buttons line up under box’s left edge */
+  gap: 8px;                 /* space between preview and buttons */
+}
+
+/* Keep your preview box styling */
+.upload-preview {
+  /* make it fill the panel width */
+  width: 100%;
+
+  /* bump up the empty‐state size */
+  min-height: 200px;     /* adjust this value as you like */
+  min-width: 300px;      /* optional, if you want a minimum width */
+
+  border: 1px dashed #aaa;
+  background: #fafafa;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* And your image styling */
+.preview-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.upload-actions {
+  display: flex;
+  gap: 8px;           /* space between the buttons */
+  margin-top: 8px;    /* a little breathing room above */
+}
+.upload-actions button {
+  flex: none;         /* buttons keep their natural size */
+}
+
+
