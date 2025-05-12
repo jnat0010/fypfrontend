@@ -29,7 +29,10 @@ export default function UploadPanel({ file, preview, onFileSelect, onUpload }) {
 
       {/* 3a) Show “Select Image” if no file chosen */}
       {!file ? (
-        <button onClick={handleSelectClick}>
+        <button
+          className="select-actions"
+          onClick={handleSelectClick}
+        >
           Select Image
         </button>
       ) : (

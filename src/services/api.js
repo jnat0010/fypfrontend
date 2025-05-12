@@ -1,29 +1,48 @@
+// src/services/api.js
 import axios from 'axios';
+const BASE = process.env.REACT_APP_API_BASE_URL;
 
-const API_BASE =
-  process.env.REACT_APP_API_BASE_URL?.replace(/\/$/, '') || ''; // e.g. "http://localhost:8000" or "" if using CRA proxy
+export async function restoreImage(file, paramsOrProgress, maybeProgress) {
+  // Determine which signature was used:
+  let params = {};
+  let onProgress = () => {};
 
-/**
- * Send the user’s file to the ML endpoint,
- * report upload progress, and return the processed image blob.
- */
-export async function restoreImage(file, onProgress) {
+  if (typeof paramsOrProgress === 'function') {
+    // old signature: (file, onProgress)
+    onProgress = paramsOrProgress;
+  } else {
+    // new signature: (file, params, onProgress)
+    params = paramsOrProgress || {};
+    if (typeof maybeProgress === 'function') {
+      onProgress = maybeProgress;
+    }
+  }
+
+  // Destructure with defaults
+  const {
+    brightness = 100,
+    noise      = 0,
+    contrast   = 100,
+  } = params;
+
   const form = new FormData();
   form.append('image', file);
+  form.append('brightness', brightness);
+  form.append('noise',      noise);
+  form.append('contrast',   contrast);
 
   const response = await axios.post(
-    `${API_BASE}/api/restore`,
-    form, 
+    `${BASE}/api/restore`,
+    form,
     {
-      responseType: 'blob',     // we expect an image back
+      responseType: 'blob',
+      headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: ({ loaded, total }) => {
-        const percent = Math.round((loaded / total) * 100);
-        onProgress(percent);
+        const pct = Math.round((loaded / total) * 100);
+        onProgress(pct);
       }
     }
   );
 
-  return response.data;  // a Blob
-
-  
+  return response.data;
 }
