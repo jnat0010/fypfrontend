@@ -1,5 +1,7 @@
 fastapi
-uvicorn[standard]
+uvicorn
+python-multipart
+numpy
+Pillow
 tensorflow
-pillow
-# any other pip-packages your ML code needs…
+scikit-image
