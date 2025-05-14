@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+tensorflow
+pillow
+# any other pip-packages your ML code needs…
