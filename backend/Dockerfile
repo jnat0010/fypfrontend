@@ -1,8 +1,16 @@
+# backend/Dockerfile
 FROM python:3.9-slim
 ENV PYTHONUNBUFFERED=1
+
 WORKDIR /app
-COPY requirements.txt requirements.txt
+
+# 1) Install Python deps
+COPY requirements.txt .
 RUN pip install -r requirements.txt
+
+# 2) Copy your code
 COPY . .
 
-CMD ["gunicorn", "-b", ":8080", "main:app"]
+# 3) Expose port & launch
+EXPOSE 8000
+CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"]
